@@ -2,6 +2,14 @@ package org.example;
 import java.sql.*;
 
 /*
+    CREATE DATABASE bookshop;
+    USE bookshop;
+    CREATE TABLE books (
+        id INT PRIMARY KEY,
+        title VARCHAR(255),
+        author VARCHAR(255),
+        price DECIMAL(5, 2)
+    );
 INSERT INTO books (id, title, author, price) VALUES
     (1, 'The Da Vinci Code', 'Dan Brown', 15.00),
     (2, 'Le Petit Prince', 'Antoine de Saint-Exupery', 29.00),
