@@ -6,7 +6,7 @@ import sql.*;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class BookStore {
     public static void main(String[] args) {
-         Books book = new Books;
+         Books book = new Books();
          book.start();
 
     }
