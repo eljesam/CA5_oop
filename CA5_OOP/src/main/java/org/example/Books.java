@@ -24,13 +24,11 @@ INSERT INTO books (id, title, author, price) VALUES
  */
 public class Books {
     public void start(){
-        String url = "jdbc:mysql://localhost/";
-        String dbName = "bookshop";
-        String fullUrl = url + dbName;
+        String url = "jdbc:mysql://localhost:3306/bookshop";
         String userName = "root";
         String password = "";
 
-        try(Connection conn = DriverManager.getConnection(fullUrl, userName, password))
+        try(Connection conn = DriverManager.getConnection(url, userName, password))
         {
 
             Statement stmt = conn.createStatement();
@@ -41,7 +39,7 @@ public class Books {
                 int id = rs.getInt("id");
                 String title = rs.getString("title");
                 String author = rs.getString("author");
-                double price = rs.getDouble("price");
+                float price = rs.getFloat("price");
                 System.out.println("ID: " + id + ", Title: " + title + ", Author: " + author + ", Price: " + price);
             }
 
