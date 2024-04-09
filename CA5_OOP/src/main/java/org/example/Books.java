@@ -57,4 +57,36 @@ public class Books {
 
 
 
+    public void getBookByID(int id){
+        String url = "jdbc:mysql://localhost:3306/bookshop";
+        String userName = "root";
+        String password = "";
+
+        try (Connection conn = DriverManager.getConnection(url, userName, password)) {
+            String sql = "SELECT * FROM books WHERE id = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setInt(1, id);
+                ResultSet rs = pstmt.executeQuery();
+
+                if (rs.next()) {
+                    int bookId = rs.getInt("id");
+                    String title = rs.getString("title");
+                    String author = rs.getString("author");
+                    float price = rs.getFloat("price");
+                    System.out.println("Book found:");
+                    System.out.println("ID: " + bookId + ", Title: " + title + ", Author: " + author + ", Price: " + price);
+                } else {
+                    System.out.println("No book found with ID: " + id);
+                }
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace(); //
+
+        }
+    }
+
+
+
 }

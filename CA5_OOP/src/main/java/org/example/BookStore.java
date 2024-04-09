@@ -23,7 +23,9 @@ public class BookStore {
                     book.start();
                     break;
                 case 2:
-
+                    System.out.println("PLease enter the book ID: ");
+                    int bookID = input.nextInt();
+                    book.getBookByID(bookID);
                     break;
                 case 3:
 
