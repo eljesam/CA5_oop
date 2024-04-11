@@ -46,7 +46,7 @@ public class MySqlBooksDao extends MySqlDao implements UserDaoInterface
             // from the super class (MySqlDao.java)
             connection = this.getConnection();
 
-            String query = "SELECT * FROM USER";
+            String query = "SELECT * FROM books";
             preparedStatement = connection.prepareStatement(query);
 
             //Using a PreparedStatement to execute SQL...
@@ -57,8 +57,9 @@ public class MySqlBooksDao extends MySqlDao implements UserDaoInterface
                 String title = resultSet.getString("title");
                 String author = resultSet.getString("author");
                 float price = resultSet.getFloat("price");
-                Book u = new Book(id, title, author, price);
-                usersList.add(u);
+                System.out.println("ID: " + id + ", Title: " + title + ", Author: " + author + ", Price: " + price);
+//                Book u = new Book(id, title, author, price);
+//                usersList.add(u);
             }
         } catch (SQLException e)
         {
@@ -96,7 +97,7 @@ public class MySqlBooksDao extends MySqlDao implements UserDaoInterface
      */
 
     //feature 2
-    public Book  getBookByID(int id){
+    public Book getBookByID(int id) {
         String url = "jdbc:mysql://localhost:3306/bookshop";
         String userName = "root";
         String password = "";
@@ -113,18 +114,16 @@ public class MySqlBooksDao extends MySqlDao implements UserDaoInterface
                     String author = rs.getString("author");
                     float price = rs.getFloat("price");
                     System.out.println("Book found:");
-                    System.out.println("ID: " + bookId + ", Title: " + title + ", Author: " + author + ", Price: " + price);
+                    return new Book(bookId, title, author, price); // Return the found book
                 } else {
                     System.out.println("No book found with ID: " + id);
                 }
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
-            e.printStackTrace(); //
-
+            e.printStackTrace();
         }
-        return null;
+        return null; // Return null if book is not found
     }
     //feature 3
     public Book deleteBookByID(int id){
@@ -212,16 +211,10 @@ public class MySqlBooksDao extends MySqlDao implements UserDaoInterface
 
     @Override
     public List<Book> getBookByFilter(Book filter) {
-        return null;
-    }
-
-    //feature 6
-    //get list of entities matching a filter based on DTO object
-public List<Book> getBooksByFilter(Book filter){
+        List<Book> books = new ArrayList<>();
         String url = "jdbc:mysql://localhost:3306/bookshop";
         String userName = "root";
         String password = "";
-        List<Book> books = new ArrayList<>();
 
         try (Connection conn = DriverManager.getConnection(url, userName, password)) {
             String sql = "SELECT * FROM books WHERE title = ? AND author = ? AND price = ?";
@@ -240,46 +233,46 @@ public List<Book> getBooksByFilter(Book filter){
                     books.add(book);
                 }
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
-            e.printStackTrace(); //
-
+            e.printStackTrace();
         }
         return books;
     }
 
-    //feature 7
-    //Feature 7 - Convert List of Entities to a JSON String
-    public String convertListToJSON(List<Book> books){
+    // Feature 7 - Convert List of Entities to a JSON String
+    public String convertListToJSON(List<Book> books) {
         StringBuilder json = new StringBuilder();
         json.append("[");
         for (Book book : books) {
             json.append("{");
-            json.append("\"id\": " + book.getId() + ", ");
-            json.append("\"title\": \"" + book.getTitle() + "\", ");
-            json.append("\"author\": \"" + book.getAuthor() + "\", ");
-            json.append("\"price\": " + book.getPrice());
+            json.append("\"id\": ").append(book.getId()).append(", ");
+            json.append("\"title\": \"").append(book.getTitle().replace("\"", "\\\"")).append("\", ");
+            json.append("\"author\": \"").append(book.getAuthor().replace("\"", "\\\"")).append("\", ");
+            json.append("\"price\": ").append(book.getPrice());
             json.append("}, ");
         }
-        json.delete(json.length() - 2, json.length());
+        if (books.size() > 0) {
+            json.delete(json.length() - 2, json.length()); // Remove trailing comma only if books were added
+        }
         json.append("]");
         return json.toString();
     }
 
-    //feature 8
-    //Convert a single Entity by Key as a JSON String
-    public String convertEntityToJSON(Book book){
+    // Feature 8 - Convert a single Entity by Key to a JSON String
+    public String convertEntityToJSON(Book book) {
+        if (book == null) {
+            return "{}"; // Return an empty object if the book is null
+        }
         StringBuilder json = new StringBuilder();
         json.append("{");
-        json.append("\"id\": " + book.getId() + ", ");
-        json.append("\"title\": \"" + book.getTitle() + "\", ");
-        json.append("\"author\": \"" + book.getAuthor() + "\", ");
-        json.append("\"price\": " + book.getPrice());
+        json.append("\"id\": ").append(book.getId()).append(", ");
+        json.append("\"title\": \"").append(book.getTitle().replace("\"", "\\\"")).append("\", ");
+        json.append("\"author\": \"").append(book.getAuthor().replace("\"", "\\\"")).append("\", ");
+        json.append("\"price\": ").append(book.getPrice());
         json.append("}");
         return json.toString();
     }
-
 
 }
 
