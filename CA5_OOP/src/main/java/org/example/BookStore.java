@@ -34,7 +34,17 @@ public class BookStore {
 
                     break;
                 case 4:
-
+                    System.out.println("Enter the details of the book to insert:");
+                    System.out.println("ID: ");
+                    int id = input.nextInt();
+                    System.out.println("Title:");
+                    String title = input.nextLine();
+                    title = input.nextLine();
+                    System.out.println("Author:");
+                    String author = input.nextLine();
+                    System.out.println("Price:");
+                    float price = input.nextFloat();
+                    book.insertBook(id, title, author, price);
                     break;
                 case 5:
 

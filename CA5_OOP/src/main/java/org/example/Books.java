@@ -116,5 +116,35 @@ public class Books {
 
 
 
+    //feature 4
+    //does not auto increment. User gives id number
+    public void insertBook(int id, String title, String author, float price) {
+        String url = "jdbc:mysql://localhost:3306/bookshop";
+        String userName = "root";
+        String password = "";
+
+        try (Connection conn = DriverManager.getConnection(url, userName, password)) {
+            String sql = "INSERT INTO books (id, title, author, price) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setInt(1, id);
+                pstmt.setString(2, title);
+                pstmt.setString(3, author);
+                pstmt.setFloat(4, price);
+
+                int rowsAffected = pstmt.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Book inserted successfully.");
+                } else {
+                    System.out.println("Failed to insert book.");
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
 
 }
