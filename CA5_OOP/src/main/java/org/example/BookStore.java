@@ -28,6 +28,9 @@ public class BookStore {
                     book.getBookByID(bookID);
                     break;
                 case 3:
+                    System.out.println("Please enter the book ID to delete: ");
+                    int deleteID = input.nextInt();
+                    book.deleteBookById(deleteID);
 
                     break;
                 case 4:

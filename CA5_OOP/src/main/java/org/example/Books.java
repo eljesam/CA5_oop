@@ -89,4 +89,32 @@ public class Books {
 
 
 
+
+    //feature 3
+    public void deleteBookById(int id) {
+        String url = "jdbc:mysql://localhost:3306/bookshop";
+        String userName = "root";
+        String password = "";
+
+        try (Connection conn = DriverManager.getConnection(url, userName, password)) {
+            String sql = "DELETE FROM books WHERE id = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setInt(1, id);
+                int rowsAffected = pstmt.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Book with ID " + id + " deleted successfully.");
+                } else {
+                    System.out.println("No book found with ID: " + id);
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+
+
+
 }
