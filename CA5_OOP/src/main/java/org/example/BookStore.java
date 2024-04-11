@@ -28,10 +28,21 @@ public class BookStore {
                     book.getBookByID(bookID);
                     break;
                 case 3:
+                    System.out.println("PLease enter the book ID: ");
+                    int bookID2 = input.nextInt();
+                    book.deleteBookByID(bookID2);
 
                     break;
                 case 4:
-
+                    System.out.println("Please enter the book ID: ");
+                    int bookID3 = input.nextInt();
+                    System.out.println("Please enter the book title: ");
+                    String title = input.next();
+                    System.out.println("Please enter the book author: ");
+                    String author = input.next();
+                    System.out.println("Please enter the book price: ");
+                    float price = input.nextFloat();
+                    book.insertBook(bookID3, title, author, price);
                     break;
                 case 5:
 

@@ -55,7 +55,7 @@ public class Books {
         }
     }
 
-
+//feature 2
 
     public void getBookByID(int id){
         String url = "jdbc:mysql://localhost:3306/bookshop";
@@ -86,6 +86,60 @@ public class Books {
 
         }
     }
+    //feature 3
+    public void deleteBookByID(int id){
+        String url = "jdbc:mysql://localhost:3306/bookshop";
+        String userName = "root";
+        String password = "";
+
+        try (Connection conn = DriverManager.getConnection(url, userName, password)) {
+            String sql = "DELETE FROM books WHERE id = ?";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setInt(1, id);
+                int rowsAffected = pstmt.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Book with ID: " + id + " deleted successfully");
+                } else {
+                    System.out.println("No book found with ID: " + id);
+                }
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace(); //
+
+        }
+    }
+    //feature 4
+    public void insertBook(int id, String title, String author, float price){
+        String url = "jdbc:mysql://localhost:3306/bookshop";
+        String userName = "root";
+        String password = "";
+
+        try (Connection conn = DriverManager.getConnection(url, userName, password)) {
+            String sql = "INSERT INTO books (id, title, author, price) VALUES (?, ?, ?, ?)";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setInt(1, id);
+                pstmt.setString(2, title);
+                pstmt.setString(3, author);
+                pstmt.setFloat(4, price);
+                int rowsAffected = pstmt.executeUpdate();
+
+                if (rowsAffected > 0) {
+                    System.out.println("Book inserted successfully");
+                } else {
+                    System.out.println("Book not inserted");
+                }
+            }
+        }
+        catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace(); //
+
+        }
+    }
+
 
 
 
