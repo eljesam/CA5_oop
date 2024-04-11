@@ -62,9 +62,16 @@ public class BookStore {
                     break;
 
                 case 6:
-                    System.out.println("Please enter the filter: ");
-                    String filter = input.next();
-                    findBookByFilter(filter);
+                    System.out.println("Please enter the book ID: ");
+                    int bookID5 = input.nextInt();
+                    System.out.println("Please enter the book title: ");
+                    String title3 = input.next();
+                    System.out.println("Please enter the book author: ");
+                    String author3 = input.next();
+                    System.out.println("Please enter the book price: ");
+                    float price3 = input.nextFloat();
+                    Book filter = new Book(bookID5, title3, author3, price3);
+                    getBookByFilter(filter);
                     break;
 
             }
@@ -108,8 +115,8 @@ public class BookStore {
             throw new RuntimeException(e);
         }
     }
-    private static void findBookByFilter(String filter) {
-        List<Book> books = userDao.findBookByFilter(filter);
+    private static void getBookByFilter(Book filter) {
+        List<Book> books = userDao.getBookByFilter(filter);
         for (Book book : books) {
             System.out.println(book);
         }

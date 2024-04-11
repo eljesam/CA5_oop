@@ -36,6 +36,8 @@ public interface UserDaoInterface
     public void updateBookByID(int id, String title, String author, float price) throws DaoException;
 
 
-    List<Book> findBookByFilter(String filter);
+    List<Book> getBookByFilter(Book filter);
+
+
 }
 

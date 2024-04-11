@@ -209,6 +209,12 @@ public class MySqlBooksDao extends MySqlDao implements UserDaoInterface
 
         }
     }
+
+    @Override
+    public List<Book> getBookByFilter(Book filter) {
+        return null;
+    }
+
     //feature 6
     //get list of entities matching a filter based on DTO object
 public List<Book> getBooksByFilter(Book filter){
@@ -241,6 +247,37 @@ public List<Book> getBooksByFilter(Book filter){
 
         }
         return books;
+    }
+
+    //feature 7
+    //Feature 7 - Convert List of Entities to a JSON String
+    public String convertListToJSON(List<Book> books){
+        StringBuilder json = new StringBuilder();
+        json.append("[");
+        for (Book book : books) {
+            json.append("{");
+            json.append("\"id\": " + book.getId() + ", ");
+            json.append("\"title\": \"" + book.getTitle() + "\", ");
+            json.append("\"author\": \"" + book.getAuthor() + "\", ");
+            json.append("\"price\": " + book.getPrice());
+            json.append("}, ");
+        }
+        json.delete(json.length() - 2, json.length());
+        json.append("]");
+        return json.toString();
+    }
+
+    //feature 8
+    //Convert a single Entity by Key as a JSON String
+    public String convertEntityToJSON(Book book){
+        StringBuilder json = new StringBuilder();
+        json.append("{");
+        json.append("\"id\": " + book.getId() + ", ");
+        json.append("\"title\": \"" + book.getTitle() + "\", ");
+        json.append("\"author\": \"" + book.getAuthor() + "\", ");
+        json.append("\"price\": " + book.getPrice());
+        json.append("}");
+        return json.toString();
     }
 
 
