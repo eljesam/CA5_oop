@@ -1,5 +1,7 @@
 package DTOs;
 
+import java.util.Objects;
+
 /**                                                     OOP Feb 2022
  *  Data Transfer Object (DTO)
  *
@@ -14,7 +16,7 @@ package DTOs;
  * between the Data Access Layer (DAOs) and the Business Layer objects.
  */
 
-public class User
+public class Book
 {
     private int id;
     private String title;
@@ -22,7 +24,7 @@ public class User
     private Float price;
 
 
-    public User(int id, String title, String author, Float price)
+    public Book(int id, String title, String author, Float price)
     {
         this.id = id;
         this.title = title;
@@ -31,7 +33,7 @@ public class User
     }
 
 
-    public User( String title, String author, Float price)
+    public Book(String title, String author, Float price)
     {
         this.id = 0;
         this.title = title;
@@ -40,7 +42,7 @@ public class User
     }
 
 
-    public User()
+    public Book()
     {
     }
 
@@ -93,6 +95,21 @@ public class User
                 ", author='" + author + '\'' +
                 ", price=" + price +
                 '}';
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Book user = (Book) o;
+        return id == user.id &&
+                Float.compare(user.price, price) == 0 &&
+                Objects.equals(title, user.title) &&
+                Objects.equals(author, user.author);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, author, price);
     }
 
 }
